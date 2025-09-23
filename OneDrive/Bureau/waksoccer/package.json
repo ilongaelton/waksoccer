@@ -1,0 +1,17 @@
+{
+  "name": "waksoccer",
+  "private": true,
+  "packageManager": "pnpm@9.7.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "start": "pnpm -r start",
+    "lint": "pnpm -r lint",
+    "format": "prettier -w ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
+  },
+  "workspaces": ["apps/*", "packages/*"]
+}

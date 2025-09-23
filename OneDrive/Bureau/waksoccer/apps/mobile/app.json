@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "waksoccer ⚽ - Free Soccer Standings",
+    "slug": "waksoccer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "description": "Get live soccer standings for 20+ major leagues worldwide - completely FREE! No ads, no subscription required.",
+    "keywords": ["soccer", "football", "standings", "league", "premier", "scores", "free", "live", "table", "results"],
+    "primaryColor": "#22c55e",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#22c55e"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.waksoccer.app",
+      "buildNumber": "1",
+      "appStoreUrl": "https://apps.apple.com/app/waksoccer"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#22c55e"
+      },
+      "package": "com.waksoccer.app",
+      "versionCode": 1,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.waksoccer.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "scheme": "waksoccer",
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    }
+  }
+}
