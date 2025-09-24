@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'league not found' }, { status: 404 });
   }
   
-  let table = [];
+  let table: any[] = [];
   try {
     if (league.provider.apiFootball && process.env.API_FOOTBALL_KEY) {
       const { leagueId, season } = league.provider.apiFootball;
