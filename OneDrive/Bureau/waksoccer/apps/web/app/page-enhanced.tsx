@@ -47,7 +47,7 @@ export default function Home() {
     // Set random user name
     setUserName('Fan' + Math.floor(Math.random() * 1000));
 
-    // Initialize live matches data
+    // Simulate live matches data
     const mockLiveMatches: LiveMatch[] = [
       { id: '1', homeTeam: 'Manchester United', awayTeam: 'Liverpool', homeScore: 2, awayScore: 1, status: 'live', minute: 67, league: 'Premier League' },
       { id: '2', homeTeam: 'Barcelona', awayTeam: 'Real Madrid', homeScore: 1, awayScore: 1, status: 'live', minute: 45, league: 'La Liga' },
@@ -153,26 +153,12 @@ export default function Home() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-4 mb-4">
-          <h1 className="text-4xl font-bold text-green-600">WakSoccer ⚽</h1>
-          <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold animate-pulse">
-            🔴 LIVE • 45s Updates
+          <h1 className="text-4xl font-bold">waksoccer ⚽</h1>
+          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+            100% FREE
           </span>
         </div>
-        <p className="text-gray-600 text-lg mb-2">
-          <span className="font-semibold">Live Championship Scores</span> Updated Every 45 Seconds
-        </p>
-        <p className="text-gray-500 text-sm">
-          Premier League • La Liga • Serie A • Bundesliga • Ligue 1 • + More Championships
-        </p>
-        <div className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500">
-          <span>⚡ Real-time Updates</span>
-          <span>•</span>
-          <span>🎯 Free Predictions</span>
-          <span>•</span>
-          <span>💬 Fan Chat</span>
-          <span>•</span>
-          <span className="font-semibold text-green-600">100% FREE</span>
-        </div>
+        <p className="text-gray-600">Live scores, predictions, and fan discussions</p>
       </div>
 
       {/* Tab Navigation */}
@@ -185,20 +171,17 @@ export default function Home() {
               : 'text-gray-600 hover:bg-gray-50'
           }`}
         >
-          🏆 Championships
+          🏆 Leagues
         </button>
         <button
           onClick={() => setSelectedTab('live')}
-          className={`flex-1 py-3 px-4 font-semibold transition-colors relative ${
+          className={`flex-1 py-3 px-4 font-semibold transition-colors ${
             selectedTab === 'live' 
               ? 'bg-green-500 text-white' 
               : 'text-gray-600 hover:bg-gray-50'
           }`}
         >
           🔴 Live Scores
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full animate-pulse">
-            45s
-          </span>
         </button>
         <button
           onClick={() => setSelectedTab('predictions')}
@@ -231,179 +214,23 @@ export default function Home() {
               <p className="text-green-800 font-medium">🎉 No subscription • No ads • Always free!</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {/* Major European Leagues */}
-              <Link href="/league/premier-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 England</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Premier League
-                  <span className="ml-auto text-green-500">→</span>
+              {LEAGUES.map((league) => (
+                <div
+                  key={league.key}
+                  className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => {
+                    setSelectedLeague(league.key);
+                    setSelectedTab('live');
+                  }}
+                >
+                  <div className="text-sm text-gray-500 mb-2">🌍 {league.country}</div>
+                  <div className="font-semibold text-gray-800 flex items-center">
+                    <span className="mr-2">⚽</span>
+                    {league.name}
+                    <span className="ml-auto text-green-500">→</span>
+                  </div>
                 </div>
-              </Link>
-
-              <Link href="/league/la-liga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Spain</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  La Liga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/serie-a" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Serie A
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/bundesliga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Bundesliga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/ligue-1" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 France</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Ligue 1
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/eredivisie" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Netherlands</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Eredivisie
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/primeira-liga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Portugal</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Primeira Liga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              {/* Second Tier European Leagues */}
-              <Link href="/league/championship" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 England</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Championship
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/ligue-2" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 France</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Ligue 2
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/serie-b" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Serie B
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/2-bundesliga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  2. Bundesliga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              {/* Americas */}
-              <Link href="/league/mls" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 USA</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  MLS
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/liga-mx" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Mexico</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Liga MX
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/brazilian-serie-a" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Brazil</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Brazilian Serie A
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/argentine-primera" className="bg-white rounded-lng p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Argentina</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Argentine Primera
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/super-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 China</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Super League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/j1-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Japan</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  J1 League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/k-league-1" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 South Korea</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  K League 1
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
-
-              <Link href="/league/a-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
-                <div className="text-sm text-gray-500 mb-2">🌍 Australia</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  A-League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </Link>
+              ))}
             </div>
           </div>
         )}
