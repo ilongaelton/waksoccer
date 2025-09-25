@@ -36,6 +36,7 @@ export default function Home() {
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
+  const [viewingLeague, setViewingLeague] = useState<string | null>(null);
   const [showPredictionModal, setShowPredictionModal] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<LiveMatch | null>(null);
   const [userPrediction, setUserPrediction] = useState({ home: '', away: '' });
@@ -141,6 +142,17 @@ export default function Home() {
     ? chatMessages
     : chatMessages.filter(msg => msg.league === selectedLeague);
 
+  const handleLeagueClick = (leagueName: string) => {
+    setViewingLeague(leagueName);
+    setSelectedLeague(leagueName.toLowerCase());
+    setSelectedTab('live');
+  };
+
+  const goBackToLeagues = () => {
+    setViewingLeague(null);
+    setSelectedTab('leagues');
+  };
+
   return (
     <main className="mx-auto max-w-6xl p-6">
       {/* Goal Notification */}
@@ -222,9 +234,28 @@ export default function Home() {
         </button>
       </div>
 
+      {/* League View */}
+      {viewingLeague && (
+        <div className="mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <button 
+              onClick={goBackToLeagues}
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              ← Back to All Leagues
+            </button>
+            <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+              🔴 LIVE • 45s Updates
+            </span>
+          </div>
+          <h1 className="text-4xl font-bold text-green-600 mb-2">⚽ {viewingLeague}</h1>
+          <p className="text-gray-600 mb-4">Live matches and league standings updated every 45 seconds</p>
+        </div>
+      )}
+
       {/* Content Area */}
       <div className="min-h-96">
-        {selectedTab === 'leagues' && (
+        {selectedTab === 'leagues' && !viewingLeague && (
           <div>
             <h2 className="text-2xl font-bold text-green-600 mb-6">⚽ Choose Your League</h2>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 text-center">
@@ -232,186 +263,247 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Major European Leagues */}
-              <Link href="/league/premier-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Premier League')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 England</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Premier League
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/la-liga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('La Liga')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Spain</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   La Liga
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/serie-a" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Serie A')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Serie A
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/bundesliga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Bundesliga')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Bundesliga
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/ligue-1" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Ligue 1')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 France</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Ligue 1
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/eredivisie" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Eredivisie')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Netherlands</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Eredivisie
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/primeira-liga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Primeira Liga')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Portugal</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Primeira Liga
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
               {/* Second Tier European Leagues */}
-              <Link href="/league/championship" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Championship')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 England</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Championship
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/ligue-2" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Ligue 2')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 France</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Ligue 2
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/serie-b" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Serie B')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Serie B
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/2-bundesliga" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('2. Bundesliga')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   2. Bundesliga
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
               {/* Americas */}
-              <Link href="/league/mls" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('MLS')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 USA</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   MLS
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/liga-mx" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Liga MX')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Mexico</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Liga MX
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/brazilian-serie-a" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Brazilian Serie A')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Brazil</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Brazilian Serie A
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/argentine-primera" className="bg-white rounded-lng p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Argentine Primera')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Argentina</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Argentine Primera
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/super-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('Super League')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 China</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Super League
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/j1-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('J1 League')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Japan</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   J1 League
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/k-league-1" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('K League 1')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 South Korea</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   K League 1
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
 
-              <Link href="/league/a-league" className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow">
+              <div 
+                onClick={() => handleLeagueClick('A-League')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
                 <div className="text-sm text-gray-500 mb-2">🌍 Australia</div>
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   A-League
                   <span className="ml-auto text-green-500">→</span>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
         )}
 
         {selectedTab === 'live' && (
           <div>
-            <h2 className="text-2xl font-bold text-green-600 mb-2">🔴 Live Scores & Updates</h2>
-            <p className="text-gray-600 mb-6">Real-time match scores with goal notifications</p>
+            <h2 className="text-2xl font-bold text-green-600 mb-2">
+              🔴 {viewingLeague ? `${viewingLeague} - Live Matches` : 'Live Scores & Updates'}
+            </h2>
+            <p className="text-gray-600 mb-6">
+              {viewingLeague ? `Live matches from ${viewingLeague} updated every 45 seconds` : 'Real-time match scores with goal notifications'}
+            </p>
             
             <div className="space-y-4">
               {filteredMatches.map((match) => (
