@@ -30,20 +30,22 @@ type ChatMessage = {
   league: string;
 };
 
-// SIMPLE & BULLETPROOF League Card - Relies on native event delegation
+// ULTRA-SIMPLE League Card - Direct onClick (No delegation complexity)
 const LeagueCard = ({ 
   leagueName, 
   country, 
-  flag
+  flag,
+  onClick
 }: { 
   leagueName: string; 
   country: string; 
   flag: string;
+  onClick: () => void;
 }) => {
   return (
-    <div 
-      data-league-name={leagueName}
-      className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50"
+    <button 
+      onClick={onClick}
+      className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 text-left active:scale-95 active:bg-green-100"
       style={{ 
         userSelect: 'none', 
         WebkitUserSelect: 'none', 
@@ -58,7 +60,7 @@ const LeagueCard = ({
         {leagueName}
         <span className="ml-auto text-green-500 font-bold">→</span>
       </div>
-    </div>
+    </button>
   );
 };
 
@@ -76,6 +78,15 @@ export default function Home() {
   const [chatInput, setChatInput] = useState('');
   const [userName, setUserName] = useState('');
   const [showGoalNotification, setShowGoalNotification] = useState<string | null>(null);
+
+  // ULTRA-SIMPLE click handler - No complexity, just works
+  const simpleLeagueClick = (leagueName: string) => {
+    console.log('🎯 DIRECT CLICK:', leagueName);
+    setViewingLeague(leagueName);
+    setSelectedLeague(leagueName.toLowerCase());
+    setSelectedTab('live');
+    console.log('✅ NAVIGATION COMPLETE:', leagueName);
+  };
 
   useEffect(() => {
     // Set random user name
@@ -451,48 +462,56 @@ export default function Home() {
                 leagueName="Premier League"
                 country="England"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Premier League")}
               />
 
               <LeagueCard 
                 leagueName="La Liga"
                 country="Spain"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("La Liga")}
               />
 
               <LeagueCard 
                 leagueName="Serie A"
                 country="Italy"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Serie A")}
               />
 
               <LeagueCard 
                 leagueName="Bundesliga"
                 country="Germany"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Bundesliga")}
               />
 
               <LeagueCard 
                 leagueName="Ligue 1"
                 country="France"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Ligue 1")}
               />
 
               <LeagueCard 
                 leagueName="Eredivisie"
                 country="Netherlands"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Eredivisie")}
               />
 
               <LeagueCard 
                 leagueName="Primeira Liga"
                 country="Portugal"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Primeira Liga")}
               />
 
               <LeagueCard 
                 leagueName="Russian Premier League"
                 country="Russia"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Russian Premier League")}
               />
 
               {/* Second Tier European Leagues */}
@@ -500,24 +519,28 @@ export default function Home() {
                 leagueName="Championship"
                 country="England"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Championship")}
               />
 
               <LeagueCard 
                 leagueName="Ligue 2"
                 country="France"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Ligue 2")}
               />
 
               <LeagueCard 
                 leagueName="Serie B"
                 country="Italy"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Serie B")}
               />
 
               <LeagueCard 
                 leagueName="2. Bundesliga"
                 country="Germany"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("2. Bundesliga")}
               />
 
               {/* Americas */}
@@ -525,48 +548,56 @@ export default function Home() {
                 leagueName="MLS"
                 country="USA"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("MLS")}
               />
 
               <LeagueCard 
                 leagueName="Liga MX"
                 country="Mexico"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Liga MX")}
               />
 
               <LeagueCard 
                 leagueName="Brazilian Serie A"
                 country="Brazil"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Brazilian Serie A")}
               />
 
               <LeagueCard 
                 leagueName="Argentine Primera"
                 country="Argentina"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Argentine Primera")}
               />
 
               <LeagueCard 
                 leagueName="Super League"
                 country="China"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("Super League")}
               />
 
               <LeagueCard 
                 leagueName="J1 League"
                 country="Japan"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("J1 League")}
               />
 
               <LeagueCard 
                 leagueName="K League 1"
                 country="South Korea"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("K League 1")}
               />
 
               <LeagueCard 
                 leagueName="A-League"
                 country="Australia"
                 flag="🌍"
+                onClick={() => simpleLeagueClick("A-League")}
               />
             </div>
           </div>
