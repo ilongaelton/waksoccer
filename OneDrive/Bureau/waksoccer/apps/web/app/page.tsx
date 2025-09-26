@@ -56,6 +56,10 @@ export default function Home() {
       { id: '4', homeTeam: 'PSG', awayTeam: 'Marseille', homeScore: 0, awayScore: 0, status: 'upcoming', league: 'Ligue 1' },
       { id: '5', homeTeam: 'Juventus', awayTeam: 'AC Milan', homeScore: 2, awayScore: 2, status: 'live', minute: 78, league: 'Serie A' },
       { id: '6', homeTeam: 'Chelsea', awayTeam: 'Arsenal', homeScore: 1, awayScore: 0, status: 'live', minute: 23, league: 'Premier League' },
+      { id: '7', homeTeam: 'Zenit', awayTeam: 'Spartak Moscow', homeScore: 1, awayScore: 1, status: 'live', minute: 52, league: 'Premier League' },
+      { id: '8', homeTeam: 'Ajax', awayTeam: 'PSV', homeScore: 2, awayScore: 0, status: 'finished', league: 'Eredivisie' },
+      { id: '9', homeTeam: 'Inter Miami', awayTeam: 'LA Galaxy', homeScore: 0, awayScore: 1, status: 'live', minute: 34, league: 'MLS' },
+      { id: '10', homeTeam: 'América', awayTeam: 'Guadalajara', homeScore: 2, awayScore: 2, status: 'live', minute: 89, league: 'Liga MX' },
     ];
     setLiveMatches(mockLiveMatches);
 
@@ -343,6 +347,18 @@ export default function Home() {
                 <div className="font-semibold text-gray-800 flex items-center">
                   <span className="mr-2">⚽</span>
                   Primeira Liga
+                  <span className="ml-auto text-green-500">→</span>
+                </div>
+              </div>
+
+              <div 
+                onClick={() => handleLeagueClick('Premier League')}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+              >
+                <div className="text-sm text-gray-500 mb-2">🌍 Russia</div>
+                <div className="font-semibold text-gray-800 flex items-center">
+                  <span className="mr-2">⚽</span>
+                  Premier League
                   <span className="ml-auto text-green-500">→</span>
                 </div>
               </div>
