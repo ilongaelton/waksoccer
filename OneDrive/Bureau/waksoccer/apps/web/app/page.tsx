@@ -413,212 +413,126 @@ export default function Home() {
                 onClick={handleLeagueClick}
               />
 
-              <div 
-                onClick={(e) => handleLeagueClick('Bundesliga', e)}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer select-none active:scale-95 transform transition-transform"
-                style={{ userSelect: 'none' }}
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Bundesliga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Bundesliga"
+                country="Germany"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Ligue 1')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 France</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Ligue 1
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Ligue 1"
+                country="France"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Eredivisie')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Netherlands</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Eredivisie
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Eredivisie"
+                country="Netherlands"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Primeira Liga')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Portugal</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Primeira Liga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Primeira Liga"
+                country="Portugal"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Russian Premier League')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Russia</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Premier League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Russian Premier League"
+                country="Russia"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
               {/* Second Tier European Leagues */}
-              <div 
-                onClick={() => handleLeagueClick('Championship')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 England</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Championship
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Championship"
+                country="England"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Ligue 2')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 France</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Ligue 2
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Ligue 2"
+                country="France"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Serie B')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Serie B
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Serie B"
+                country="Italy"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('2. Bundesliga')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  2. Bundesliga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="2. Bundesliga"
+                country="Germany"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
               {/* Americas */}
-              <div 
-                onClick={() => handleLeagueClick('MLS')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 USA</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  MLS
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="MLS"
+                country="USA"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Liga MX')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Mexico</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Liga MX
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Liga MX"
+                country="Mexico"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Brazilian Serie A')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Brazil</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Brazilian Serie A
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Brazilian Serie A"
+                country="Brazil"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Argentine Primera')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Argentina</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Argentine Primera
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Argentine Primera"
+                country="Argentina"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('Super League')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 China</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Super League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Super League"
+                country="China"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('J1 League')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Japan</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  J1 League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="J1 League"
+                country="Japan"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('K League 1')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 South Korea</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  K League 1
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="K League 1"
+                country="South Korea"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
-              <div 
-                onClick={() => handleLeagueClick('A-League')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Australia</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  A-League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="A-League"
+                country="Australia"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
             </div>
           </div>
         )}
