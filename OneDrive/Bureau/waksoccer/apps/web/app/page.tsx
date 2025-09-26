@@ -406,10 +406,10 @@ export default function Home() {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-green-600">WakSoccer ⚽</h1>
           <p className="text-gray-600 text-lg mb-2">
-            Loading interactive soccer data...
+            Loading interactive soccer data... v2.0
           </p>
           <div className="bg-blue-100 border border-blue-200 rounded-lg p-4 mt-4">
-            <p className="text-blue-800 font-medium">🚀 Initializing bulletproof league buttons...</p>
+            <p className="text-blue-800 font-medium">🚀 Initializing bulletproof league buttons... v2.0</p>
           </div>
         </div>
       </main>
