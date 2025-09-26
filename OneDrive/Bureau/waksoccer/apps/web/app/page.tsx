@@ -30,7 +30,7 @@ type ChatMessage = {
   league: string;
 };
 
-// League Card Component for consistent clickable behavior
+// Ultra Reliable League Card Component - Multiple click detection methods
 const LeagueCard = ({ 
   leagueName, 
   country, 
@@ -42,32 +42,43 @@ const LeagueCard = ({
   flag: string; 
   onClick: (name: string, e: React.MouseEvent) => void;
 }) => {
-  const handleInteraction = (e: React.MouseEvent) => {
+  const [isClicking, setIsClicking] = useState(false);
+  
+  const handleClick = (e: React.MouseEvent, method: string) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('🎯 Card clicked:', leagueName);
+    
+    if (isClicking) return; // Prevent double clicks
+    
+    setIsClicking(true);
+    console.log(`🎯 ${method} triggered for:`, leagueName);
+    
+    // Execute the click handler
     onClick(leagueName, e);
+    
+    // Reset after short delay
+    setTimeout(() => setIsClicking(false), 500);
   };
 
   return (
-    <div 
-      onClick={handleInteraction}
-      onMouseDown={handleInteraction}  // Backup handler
-      onTouchStart={(e) => handleInteraction(e as any)}  // Touch support
-      className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none active:scale-95 transform hover:border-green-300 hover:bg-green-50"
+    <button 
+      type="button"
+      data-league-name={leagueName}
+      onClick={(e) => handleClick(e, 'onClick')}
+      onMouseDown={(e) => !isClicking && handleClick(e, 'onMouseDown')}
+      onTouchStart={(e) => !isClicking && handleClick(e as any, 'onTouchStart')}
+      className={`w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none active:scale-95 transform hover:border-green-300 hover:bg-green-50 text-left ${isClicking ? 'scale-95 bg-green-100 border-green-400' : ''}`}
       style={{ 
         userSelect: 'none', 
         WebkitUserSelect: 'none', 
         msUserSelect: 'none',
         WebkitTouchCallout: 'none',
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
+        outline: 'none'
       }}
-      role="button"
-      tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleInteraction(e as any);
+        if ((e.key === 'Enter' || e.key === ' ') && !isClicking) {
+          handleClick(e as any, 'onKeyDown');
         }
       }}
     >
@@ -77,13 +88,14 @@ const LeagueCard = ({
         {leagueName}
         <span className="ml-auto text-green-500 font-bold">→</span>
       </div>
-    </div>
+    </button>
   );
 };
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState<'leagues' | 'live' | 'predictions' | 'chat'>('leagues');
   const [liveMatches, setLiveMatches] = useState<LiveMatch[]>([]);
+  const [forceRerender, setForceRerender] = useState(0);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
@@ -98,6 +110,23 @@ export default function Home() {
   useEffect(() => {
     // Set random user name
     setUserName('Fan' + Math.floor(Math.random() * 1000));
+    
+    // Global click listener as backup for league cards
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const leagueCard = target.closest('[data-league-name]');
+      
+      if (leagueCard) {
+        const leagueName = leagueCard.getAttribute('data-league-name');
+        if (leagueName && !viewingLeague) {
+          console.log('🆘 BACKUP CLICK HANDLER activated for:', leagueName);
+          handleLeagueClick(leagueName);
+        }
+      }
+    };
+    
+    document.addEventListener('click', handleGlobalClick);
+    return () => document.removeEventListener('click', handleGlobalClick);
 
     // Initialize live matches data for ALL 20 leagues
     const mockLiveMatches: LiveMatch[] = [
@@ -263,18 +292,42 @@ export default function Home() {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log('🏆 Clicking league:', leagueName); // Debug log
-    console.log('🔄 Current viewing league:', viewingLeague);
-    console.log('📊 Current tab:', selectedTab);
     
-    setViewingLeague(leagueName);
-    setSelectedLeague(leagueName.toLowerCase());
-    setSelectedTab('live');
+    console.log('🏆 LEAGUE CLICK INITIATED:', leagueName);
+    console.log('� Before - viewing:', viewingLeague, 'tab:', selectedTab);
     
-    // Add a small delay to ensure state updates
+    // Force state updates with functional updates to avoid stale closures
+    setViewingLeague(prev => {
+      console.log('� ViewingLeague changed from', prev, 'to', leagueName);
+      return leagueName;
+    });
+    
+    setSelectedLeague(prev => {
+      const newLeague = leagueName.toLowerCase();
+      console.log('🔄 SelectedLeague changed from', prev, 'to', newLeague);
+      return newLeague;
+    });
+    
+    setSelectedTab(prev => {
+      console.log('🔄 Tab changed from', prev, 'to live');
+      return 'live';
+    });
+    
+    // Force component re-render to ensure UI updates
+    setForceRerender(prev => prev + 1);
+    
+    // Verify state change after brief delay
     setTimeout(() => {
-      console.log('✅ Updated to:', leagueName, 'Tab:', 'live');
-    }, 100);
+      console.log('✅ FINAL STATE CHECK - League:', leagueName);
+      console.log('📊 Should show live matches for:', leagueName);
+      
+      // Double-check if the state didn't update properly and retry
+      if (document.querySelector('[data-current-view]')?.getAttribute('data-current-view') !== 'live') {
+        console.log('🔄 RETRY: State update may have failed, forcing again...');
+        setSelectedTab('live');
+        setViewingLeague(leagueName);
+      }
+    }, 300);
   };
 
   const goBackToLeagues = () => {
@@ -383,12 +436,13 @@ export default function Home() {
       )}
 
       {/* Content Area */}
-      <div className="min-h-96">
+      <div className="min-h-96" data-current-view={selectedTab} data-force-render={forceRerender}>
         {selectedTab === 'leagues' && !viewingLeague && (
           <div>
             <h2 className="text-2xl font-bold text-green-600 mb-6">⚽ Choose Your League</h2>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 text-center">
               <p className="text-green-800 font-medium">🎉 No subscription • No ads • Always free!</p>
+              <p className="text-xs text-green-600 mt-1">Debug: Click any league card below for instant live matches</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Major European Leagues */}
