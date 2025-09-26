@@ -30,65 +30,35 @@ type ChatMessage = {
   league: string;
 };
 
-// Ultra Reliable League Card Component - Multiple click detection methods
+// SIMPLE & BULLETPROOF League Card - Relies on native event delegation
 const LeagueCard = ({ 
   leagueName, 
   country, 
-  flag, 
-  onClick 
+  flag
 }: { 
   leagueName: string; 
   country: string; 
-  flag: string; 
-  onClick: (name: string, e: React.MouseEvent) => void;
+  flag: string;
 }) => {
-  const [isClicking, setIsClicking] = useState(false);
-  
-  const handleClick = (e: React.MouseEvent, method: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (isClicking) return; // Prevent double clicks
-    
-    setIsClicking(true);
-    console.log(`🎯 ${method} triggered for:`, leagueName);
-    
-    // Execute the click handler
-    onClick(leagueName, e);
-    
-    // Reset after short delay
-    setTimeout(() => setIsClicking(false), 500);
-  };
-
   return (
-    <button 
-      type="button"
+    <div 
       data-league-name={leagueName}
-      onClick={(e) => handleClick(e, 'onClick')}
-      onMouseDown={(e) => !isClicking && handleClick(e, 'onMouseDown')}
-      onTouchStart={(e) => !isClicking && handleClick(e as any, 'onTouchStart')}
-      className={`w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none active:scale-95 transform hover:border-green-300 hover:bg-green-50 text-left ${isClicking ? 'scale-95 bg-green-100 border-green-400' : ''}`}
+      className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50"
       style={{ 
         userSelect: 'none', 
         WebkitUserSelect: 'none', 
         msUserSelect: 'none',
         WebkitTouchCallout: 'none',
-        WebkitTapHighlightColor: 'transparent',
-        outline: 'none'
-      }}
-      onKeyDown={(e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && !isClicking) {
-          handleClick(e as any, 'onKeyDown');
-        }
+        WebkitTapHighlightColor: 'transparent'
       }}
     >
-      <div className="text-sm text-gray-500 mb-2 pointer-events-none">{flag} {country}</div>
-      <div className="font-semibold text-gray-800 flex items-center pointer-events-none">
+      <div className="text-sm text-gray-500 mb-2">{flag} {country}</div>
+      <div className="font-semibold text-gray-800 flex items-center">
         <span className="mr-2">⚽</span>
         {leagueName}
         <span className="ml-auto text-green-500 font-bold">→</span>
       </div>
-    </button>
+    </div>
   );
 };
 
@@ -111,22 +81,53 @@ export default function Home() {
     // Set random user name
     setUserName('Fan' + Math.floor(Math.random() * 1000));
     
-    // Global click listener as backup for league cards
-    const handleGlobalClick = (e: MouseEvent) => {
+    // ULTIMATE SOLUTION: Native JavaScript event delegation
+    const handleLeagueCardClick = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const target = e.target as HTMLElement;
-      const leagueCard = target.closest('[data-league-name]');
+      const leagueCard = target.closest('[data-league-name]') as HTMLElement;
       
       if (leagueCard) {
         const leagueName = leagueCard.getAttribute('data-league-name');
-        if (leagueName && !viewingLeague) {
-          console.log('🆘 BACKUP CLICK HANDLER activated for:', leagueName);
-          handleLeagueClick(leagueName);
+        if (leagueName) {
+          console.log('� NATIVE CLICK DETECTED:', leagueName);
+          
+          // Visual feedback
+          leagueCard.style.transform = 'scale(0.95)';
+          leagueCard.style.backgroundColor = '#dcfce7';
+          leagueCard.style.borderColor = '#16a34a';
+          
+          // Immediate state update
+          setViewingLeague(leagueName);
+          setSelectedLeague(leagueName.toLowerCase());
+          setSelectedTab('live');
+          
+          // Reset visual feedback
+          setTimeout(() => {
+            leagueCard.style.transform = '';
+            leagueCard.style.backgroundColor = '';
+            leagueCard.style.borderColor = '';
+          }, 200);
+          
+          console.log('✅ NAVIGATION COMPLETE:', leagueName);
         }
       }
     };
     
-    document.addEventListener('click', handleGlobalClick);
-    return () => document.removeEventListener('click', handleGlobalClick);
+    // Add multiple event listeners for maximum reliability
+    document.addEventListener('click', handleLeagueCardClick, true); // Capture phase
+    document.addEventListener('click', handleLeagueCardClick, false); // Bubble phase
+    document.addEventListener('mousedown', handleLeagueCardClick, true);
+    document.addEventListener('touchstart', handleLeagueCardClick, true);
+    
+    return () => {
+      document.removeEventListener('click', handleLeagueCardClick, true);
+      document.removeEventListener('click', handleLeagueCardClick, false);
+      document.removeEventListener('mousedown', handleLeagueCardClick, true);
+      document.removeEventListener('touchstart', handleLeagueCardClick, true);
+    };
 
     // Initialize live matches data for ALL 20 leagues
     const mockLiveMatches: LiveMatch[] = [
@@ -450,56 +451,48 @@ export default function Home() {
                 leagueName="Premier League"
                 country="England"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="La Liga"
                 country="Spain"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Serie A"
                 country="Italy"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Bundesliga"
                 country="Germany"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Ligue 1"
                 country="France"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Eredivisie"
                 country="Netherlands"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Primeira Liga"
                 country="Portugal"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Russian Premier League"
                 country="Russia"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               {/* Second Tier European Leagues */}
@@ -507,28 +500,24 @@ export default function Home() {
                 leagueName="Championship"
                 country="England"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Ligue 2"
                 country="France"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Serie B"
                 country="Italy"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="2. Bundesliga"
                 country="Germany"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               {/* Americas */}
@@ -536,56 +525,48 @@ export default function Home() {
                 leagueName="MLS"
                 country="USA"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Liga MX"
                 country="Mexico"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Brazilian Serie A"
                 country="Brazil"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Argentine Primera"
                 country="Argentina"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="Super League"
                 country="China"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="J1 League"
                 country="Japan"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="K League 1"
                 country="South Korea"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
 
               <LeagueCard 
                 leagueName="A-League"
                 country="Australia"
                 flag="🌍"
-                onClick={handleLeagueClick}
               />
             </div>
           </div>
