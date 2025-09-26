@@ -1,5 +1,5 @@
 'use client';
-// DEPLOYMENT TIMESTAMP: 2024-12-22 16:45:00 UTC - BUILD VERSION 3.0
+// DEPLOYMENT TIMESTAMP: 2024-12-22 17:15:00 UTC - BUILD VERSION 5.0 - VERCEL FIX
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { LEAGUES } from "@/core/leagues";
