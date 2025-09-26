@@ -48,18 +48,74 @@ export default function Home() {
     // Set random user name
     setUserName('Fan' + Math.floor(Math.random() * 1000));
 
-    // Initialize live matches data
+    // Initialize live matches data for ALL 20 leagues
     const mockLiveMatches: LiveMatch[] = [
+      // Premier League (England)
       { id: '1', homeTeam: 'Manchester United', awayTeam: 'Liverpool', homeScore: 2, awayScore: 1, status: 'live', minute: 67, league: 'Premier League' },
-      { id: '2', homeTeam: 'Barcelona', awayTeam: 'Real Madrid', homeScore: 1, awayScore: 1, status: 'live', minute: 45, league: 'La Liga' },
-      { id: '3', homeTeam: 'Bayern Munich', awayTeam: 'Dortmund', homeScore: 3, awayScore: 0, status: 'finished', league: 'Bundesliga' },
-      { id: '4', homeTeam: 'PSG', awayTeam: 'Marseille', homeScore: 0, awayScore: 0, status: 'upcoming', league: 'Ligue 1' },
-      { id: '5', homeTeam: 'Juventus', awayTeam: 'AC Milan', homeScore: 2, awayScore: 2, status: 'live', minute: 78, league: 'Serie A' },
-      { id: '6', homeTeam: 'Chelsea', awayTeam: 'Arsenal', homeScore: 1, awayScore: 0, status: 'live', minute: 23, league: 'Premier League' },
-      { id: '7', homeTeam: 'Zenit', awayTeam: 'Spartak Moscow', homeScore: 1, awayScore: 1, status: 'live', minute: 52, league: 'Premier League' },
-      { id: '8', homeTeam: 'Ajax', awayTeam: 'PSV', homeScore: 2, awayScore: 0, status: 'finished', league: 'Eredivisie' },
-      { id: '9', homeTeam: 'Inter Miami', awayTeam: 'LA Galaxy', homeScore: 0, awayScore: 1, status: 'live', minute: 34, league: 'MLS' },
-      { id: '10', homeTeam: 'América', awayTeam: 'Guadalajara', homeScore: 2, awayScore: 2, status: 'live', minute: 89, league: 'Liga MX' },
+      { id: '2', homeTeam: 'Chelsea', awayTeam: 'Arsenal', homeScore: 1, awayScore: 0, status: 'live', minute: 23, league: 'Premier League' },
+      
+      // La Liga (Spain)
+      { id: '3', homeTeam: 'Barcelona', awayTeam: 'Real Madrid', homeScore: 1, awayScore: 1, status: 'live', minute: 45, league: 'La Liga' },
+      { id: '4', homeTeam: 'Atletico Madrid', awayTeam: 'Valencia', homeScore: 2, awayScore: 0, status: 'finished', league: 'La Liga' },
+      
+      // Bundesliga (Germany)
+      { id: '5', homeTeam: 'Bayern Munich', awayTeam: 'Dortmund', homeScore: 3, awayScore: 0, status: 'finished', league: 'Bundesliga' },
+      { id: '6', homeTeam: 'RB Leipzig', awayTeam: 'Bayer Leverkusen', homeScore: 1, awayScore: 2, status: 'live', minute: 77, league: 'Bundesliga' },
+      
+      // Serie A (Italy)
+      { id: '7', homeTeam: 'Juventus', awayTeam: 'AC Milan', homeScore: 2, awayScore: 2, status: 'live', minute: 78, league: 'Serie A' },
+      { id: '8', homeTeam: 'Inter Milan', awayTeam: 'Roma', homeScore: 1, awayScore: 0, status: 'upcoming', league: 'Serie A' },
+      
+      // Ligue 1 (France)
+      { id: '9', homeTeam: 'PSG', awayTeam: 'Marseille', homeScore: 0, awayScore: 0, status: 'upcoming', league: 'Ligue 1' },
+      { id: '10', homeTeam: 'Lyon', awayTeam: 'Monaco', homeScore: 2, awayScore: 1, status: 'live', minute: 55, league: 'Ligue 1' },
+      
+      // Eredivisie (Netherlands)
+      { id: '11', homeTeam: 'Ajax', awayTeam: 'PSV', homeScore: 2, awayScore: 0, status: 'finished', league: 'Eredivisie' },
+      { id: '12', homeTeam: 'Feyenoord', awayTeam: 'AZ Alkmaar', homeScore: 1, awayScore: 1, status: 'live', minute: 42, league: 'Eredivisie' },
+      
+      // Primeira Liga (Portugal)
+      { id: '13', homeTeam: 'Porto', awayTeam: 'Benfica', homeScore: 0, awayScore: 1, status: 'live', minute: 31, league: 'Primeira Liga' },
+      
+      // Russian Premier League
+      { id: '14', homeTeam: 'Zenit', awayTeam: 'Spartak Moscow', homeScore: 1, awayScore: 1, status: 'live', minute: 52, league: 'Russian Premier League' },
+      
+      // Championship (England)
+      { id: '15', homeTeam: 'Leeds United', awayTeam: 'Sheffield United', homeScore: 2, awayScore: 1, status: 'live', minute: 68, league: 'Championship' },
+      
+      // Ligue 2 (France)
+      { id: '16', homeTeam: 'Toulouse', awayTeam: 'Auxerre', homeScore: 1, awayScore: 0, status: 'finished', league: 'Ligue 2' },
+      
+      // Serie B (Italy)
+      { id: '17', homeTeam: 'Parma', awayTeam: 'Venezia', homeScore: 0, awayScore: 2, status: 'live', minute: 59, league: 'Serie B' },
+      
+      // 2. Bundesliga (Germany)
+      { id: '18', homeTeam: 'Hamburger SV', awayTeam: 'St. Pauli', homeScore: 1, awayScore: 1, status: 'live', minute: 33, league: '2. Bundesliga' },
+      
+      // MLS (USA)
+      { id: '19', homeTeam: 'Inter Miami', awayTeam: 'LA Galaxy', homeScore: 0, awayScore: 1, status: 'live', minute: 34, league: 'MLS' },
+      { id: '20', homeTeam: 'Atlanta United', awayTeam: 'Seattle Sounders', homeScore: 2, awayScore: 0, status: 'finished', league: 'MLS' },
+      
+      // Liga MX (Mexico)
+      { id: '21', homeTeam: 'América', awayTeam: 'Guadalajara', homeScore: 2, awayScore: 2, status: 'live', minute: 89, league: 'Liga MX' },
+      
+      // Brazilian Serie A
+      { id: '22', homeTeam: 'Flamengo', awayTeam: 'Palmeiras', homeScore: 1, awayScore: 0, status: 'live', minute: 27, league: 'Brazilian Serie A' },
+      
+      // Argentine Primera
+      { id: '23', homeTeam: 'River Plate', awayTeam: 'Boca Juniors', homeScore: 1, awayScore: 1, status: 'live', minute: 81, league: 'Argentine Primera' },
+      
+      // Super League (China)
+      { id: '24', homeTeam: 'Shanghai SIPG', awayTeam: 'Guangzhou FC', homeScore: 0, awayScore: 1, status: 'upcoming', league: 'Super League' },
+      
+      // J1 League (Japan)
+      { id: '25', homeTeam: 'Kashima Antlers', awayTeam: 'Urawa Red Diamonds', homeScore: 2, awayScore: 1, status: 'live', minute: 73, league: 'J1 League' },
+      
+      // K League 1 (South Korea)
+      { id: '26', homeTeam: 'FC Seoul', awayTeam: 'Jeonbuk FC', homeScore: 0, awayScore: 0, status: 'live', minute: 19, league: 'K League 1' },
+      
+      // A-League (Australia)
+      { id: '27', homeTeam: 'Melbourne Victory', awayTeam: 'Sydney FC', homeScore: 1, awayScore: 2, status: 'finished', league: 'A-League' },
     ];
     setLiveMatches(mockLiveMatches);
 
@@ -140,7 +196,12 @@ export default function Home() {
 
   const filteredMatches = selectedLeague === 'all' 
     ? liveMatches 
-    : liveMatches.filter(match => match.league.toLowerCase().includes(selectedLeague.toLowerCase()));
+    : liveMatches.filter(match => {
+        const leagueName = match.league.toLowerCase();
+        const selectedLeagueName = selectedLeague.toLowerCase();
+        // Exact match first, then includes for partial matches
+        return leagueName === selectedLeagueName || leagueName.includes(selectedLeagueName);
+      });
 
   const filteredChatMessages = selectedLeague === 'all'
     ? chatMessages
@@ -352,7 +413,7 @@ export default function Home() {
               </div>
 
               <div 
-                onClick={() => handleLeagueClick('Premier League')}
+                onClick={() => handleLeagueClick('Russian Premier League')}
                 className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
               >
                 <div className="text-sm text-gray-500 mb-2">🌍 Russia</div>
