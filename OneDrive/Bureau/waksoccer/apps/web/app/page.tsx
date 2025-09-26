@@ -1,5 +1,5 @@
 'use client';
-
+// DEPLOYMENT TIMESTAMP: 2024-12-22 16:45:00 UTC - BUILD VERSION 3.0
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { LEAGUES } from "@/core/leagues";
