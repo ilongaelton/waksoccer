@@ -30,6 +30,57 @@ type ChatMessage = {
   league: string;
 };
 
+// League Card Component for consistent clickable behavior
+const LeagueCard = ({ 
+  leagueName, 
+  country, 
+  flag, 
+  onClick 
+}: { 
+  leagueName: string; 
+  country: string; 
+  flag: string; 
+  onClick: (name: string, e: React.MouseEvent) => void;
+}) => {
+  const handleInteraction = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('🎯 Card clicked:', leagueName);
+    onClick(leagueName, e);
+  };
+
+  return (
+    <div 
+      onClick={handleInteraction}
+      onMouseDown={handleInteraction}  // Backup handler
+      onTouchStart={(e) => handleInteraction(e as any)}  // Touch support
+      className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none active:scale-95 transform hover:border-green-300 hover:bg-green-50"
+      style={{ 
+        userSelect: 'none', 
+        WebkitUserSelect: 'none', 
+        msUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+        WebkitTapHighlightColor: 'transparent'
+      }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleInteraction(e as any);
+        }
+      }}
+    >
+      <div className="text-sm text-gray-500 mb-2 pointer-events-none">{flag} {country}</div>
+      <div className="font-semibold text-gray-800 flex items-center pointer-events-none">
+        <span className="mr-2">⚽</span>
+        {leagueName}
+        <span className="ml-auto text-green-500 font-bold">→</span>
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState<'leagues' | 'live' | 'predictions' | 'chat'>('leagues');
   const [liveMatches, setLiveMatches] = useState<LiveMatch[]>([]);
@@ -207,10 +258,23 @@ export default function Home() {
     ? chatMessages
     : chatMessages.filter(msg => msg.league === selectedLeague);
 
-  const handleLeagueClick = (leagueName: string) => {
+  const handleLeagueClick = (leagueName: string, event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.log('🏆 Clicking league:', leagueName); // Debug log
+    console.log('🔄 Current viewing league:', viewingLeague);
+    console.log('📊 Current tab:', selectedTab);
+    
     setViewingLeague(leagueName);
     setSelectedLeague(leagueName.toLowerCase());
     setSelectedTab('live');
+    
+    // Add a small delay to ensure state updates
+    setTimeout(() => {
+      console.log('✅ Updated to:', leagueName, 'Tab:', 'live');
+    }, 100);
   };
 
   const goBackToLeagues = () => {
@@ -328,45 +392,31 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Major European Leagues */}
-              <div 
-                onClick={() => handleLeagueClick('Premier League')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 England</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Premier League
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
+              <LeagueCard 
+                leagueName="Premier League"
+                country="England"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
+
+              <LeagueCard 
+                leagueName="La Liga"
+                country="Spain"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
+
+              <LeagueCard 
+                leagueName="Serie A"
+                country="Italy"
+                flag="🌍"
+                onClick={handleLeagueClick}
+              />
 
               <div 
-                onClick={() => handleLeagueClick('La Liga')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Spain</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  La Liga
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => handleLeagueClick('Serie A')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Serie A
-                  <span className="ml-auto text-green-500">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => handleLeagueClick('Bundesliga')}
-                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
+                onClick={(e) => handleLeagueClick('Bundesliga', e)}
+                className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer select-none active:scale-95 transform transition-transform"
+                style={{ userSelect: 'none' }}
               >
                 <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
                 <div className="font-semibold text-gray-800 flex items-center">
