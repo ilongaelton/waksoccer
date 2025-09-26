@@ -86,6 +86,7 @@ const LeagueCard = ({
 };
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
   const [selectedTab, setSelectedTab] = useState<'leagues' | 'live' | 'predictions' | 'chat'>('leagues');
   const [liveMatches, setLiveMatches] = useState<LiveMatch[]>([]);
   const [forceRerender, setForceRerender] = useState(0);
@@ -137,6 +138,9 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Ensure we're on the client side
+    setIsClient(true);
+    
     // Set random user name
     setUserName('Fan' + Math.floor(Math.random() * 1000));
     
@@ -394,6 +398,23 @@ export default function Home() {
     setViewingLeague(null);
     setSelectedTab('leagues');
   };
+
+  // Show loading state during hydration
+  if (!isClient) {
+    return (
+      <main className="mx-auto max-w-6xl p-6">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-green-600">WakSoccer ⚽</h1>
+          <p className="text-gray-600 text-lg mb-2">
+            Loading interactive soccer data...
+          </p>
+          <div className="bg-blue-100 border border-blue-200 rounded-lg p-4 mt-4">
+            <p className="text-blue-800 font-medium">🚀 Initializing bulletproof league buttons...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-6xl p-6">
