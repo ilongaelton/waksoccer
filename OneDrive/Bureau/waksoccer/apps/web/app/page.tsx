@@ -1,5 +1,5 @@
 'use client';
-// DEPLOYMENT TIMESTAMP: 2024-12-22 17:25:00 UTC - BUILD VERSION 6.0 - VERCEL REACTIVATION
+// DEPLOYMENT TIMESTAMP: 2024-12-22 17:30:00 UTC - BUILD VERSION 7.0 - ALL CHAMPIONSHIPS WITH FLAGS
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { LEAGUES } from "@/core/leagues";
@@ -533,95 +533,8 @@ export default function Home() {
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {/* Major European Leagues */}
-              <div 
-                onClick={() => simpleLeagueClick("Premier League")}
-                onMouseDown={() => simpleLeagueClick("Premier League")}
-                onTouchStart={() => simpleLeagueClick("Premier League")}
-                className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 England</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Premier League
-                  <span className="ml-auto text-green-500 font-bold">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => simpleLeagueClick("La Liga")}
-                onMouseDown={() => simpleLeagueClick("La Liga")}
-                onTouchStart={() => simpleLeagueClick("La Liga")}
-                className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Spain</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  La Liga
-                  <span className="ml-auto text-green-500 font-bold">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => simpleLeagueClick("Serie A")}
-                onMouseDown={() => simpleLeagueClick("Serie A")}
-                onTouchStart={() => simpleLeagueClick("Serie A")}
-                className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Italy</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Serie A
-                  <span className="ml-auto text-green-500 font-bold">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => simpleLeagueClick("Bundesliga")}
-                onMouseDown={() => simpleLeagueClick("Bundesliga")}
-                onTouchStart={() => simpleLeagueClick("Bundesliga")}
-                className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 Germany</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Bundesliga
-                  <span className="ml-auto text-green-500 font-bold">→</span>
-                </div>
-              </div>
-
-              <div 
-                onClick={() => simpleLeagueClick("Ligue 1")}
-                onMouseDown={() => simpleLeagueClick("Ligue 1")}
-                onTouchStart={() => simpleLeagueClick("Ligue 1")}
-                className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
-              >
-                <div className="text-sm text-gray-500 mb-2">🌍 France</div>
-                <div className="font-semibold text-gray-800 flex items-center">
-                  <span className="mr-2">⚽</span>
-                  Ligue 1
-                  <span className="ml-auto text-green-500 font-bold">→</span>
-                </div>
-              </div>
-
-              {/* All remaining leagues as direct divs for maximum compatibility */}
-              {[
-                {name: "Eredivisie", country: "Netherlands"},
-                {name: "Primeira Liga", country: "Portugal"},
-                {name: "Russian Premier League", country: "Russia"},
-                {name: "Championship", country: "England"},
-                {name: "Ligue 2", country: "France"},
-                {name: "Serie B", country: "Italy"},
-                {name: "2. Bundesliga", country: "Germany"},
-                {name: "MLS", country: "USA"},
-                {name: "Liga MX", country: "Mexico"},
-                {name: "Brazilian Serie A", country: "Brazil"},
-                {name: "Argentine Primera", country: "Argentina"},
-                {name: "Super League", country: "China"},
-                {name: "J1 League", country: "Japan"},
-                {name: "K League 1", country: "South Korea"},
-                {name: "A-League", country: "Australia"}
-              ].map((league) => (
+              {/* All championships with flags from LEAGUES data */}
+              {LEAGUES.map((league) => (
                 <div 
                   key={league.name}
                   onClick={() => simpleLeagueClick(league.name)}
@@ -629,7 +542,7 @@ export default function Home() {
                   onTouchStart={() => simpleLeagueClick(league.name)}
                   className="w-full bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-all cursor-pointer select-none hover:border-green-300 hover:bg-green-50 active:scale-95 active:bg-green-100"
                 >
-                  <div className="text-sm text-gray-500 mb-2">🌍 {league.country}</div>
+                  <div className="text-sm text-gray-500 mb-2">{league.flag} {league.country}</div>
                   <div className="font-semibold text-gray-800 flex items-center">
                     <span className="mr-2">⚽</span>
                     {league.name}
